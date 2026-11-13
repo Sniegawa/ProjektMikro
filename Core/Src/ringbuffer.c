@@ -16,7 +16,8 @@ void RxRB_Init(RxRingBuffer* b)
 }
 bool RxRB_Push(RxRingBuffer* b, uint8_t v)
 {
-	uint16_t next = (b->head + 1) & RX_RINGBUFFER_MASK; // Jeżeli przeskoczymy poza maksymalny indeks operacja AND z maską wyzeruje nam indeks
+	// Volatile zeby kompilator nie optymalizował przypisania
+	volatile uint16_t next = (b->head + 1) & RX_RINGBUFFER_MASK; // Jeżeli przeskoczymy poza maksymalny indeks operacja AND z maską wyzeruje nam indeks
 
 	if(next == b->tail)
 	{
@@ -49,7 +50,8 @@ void TxRB_Init(TxRingBuffer* b)
 }
 bool TxRB_Push(TxRingBuffer* b, uint8_t v)
 {
-	uint16_t next = (b->head + 1) & TX_RINGBUFFER_MASK; // Jeżeli przeskoczymy poza maksymalny indeks operacja AND z maską wyzeruje nam indeks
+	// Volatile zeby kompilator nie optymalizował przypisania
+	volatile uint16_t next = (b->head + 1) & TX_RINGBUFFER_MASK; // Jeżeli przeskoczymy poza maksymalny indeks operacja AND z maską wyzeruje nam indeks
 
 	if(next == b->tail)
 	{
